@@ -10,6 +10,7 @@ function listarProdutos(arrayDeProdutos){
     }
 }
 listarProdutos(produtos)
+calcularTotal(produtos)
 
 function criarCardProduto(produto){
     let tagLi   = document.createElement("li")
@@ -29,13 +30,14 @@ function criarCardProduto(produto){
     return tagLi
 }
 
-let btnTodosProdutos = document.getElementById("1")
-let btnHortifruti    = document.getElementById("2")
-let btnPanificadora  = document.getElementById("3")
-let btnLaticinios    = document.getElementById("4")
+function calcularTotal(array){
+    document.querySelector(".totalPreco").innerText = ""
+    let total      = 0
 
-btnTodosProdutos.addEventListener("click", function(){
-    ulProdutos.innerHTML = ""
-    listarProdutos(produtos)
-})
+    for(let i = 0; i < array.length; i++){
+        let valor = array[i].preco
+        total += valor
+    }
 
+    document.querySelector(".totalPreco").innerText = `R$ ${total}.00`
+}
