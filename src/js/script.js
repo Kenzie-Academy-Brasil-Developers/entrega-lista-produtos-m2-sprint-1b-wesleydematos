@@ -1,5 +1,6 @@
+let ulProdutos = document.querySelector("ul")
+
 function listarProdutos(arrayDeProdutos){
-    let ulProdutos = document.querySelector("ul")
 
     for(let i = 0; i<arrayDeProdutos.length; i++){
         let produto             = arrayDeProdutos[i]
@@ -27,3 +28,14 @@ function criarCardProduto(produto){
 
     return tagLi
 }
+
+let btnTodosProdutos = document.getElementById("1")
+let btnHortifruti    = document.getElementById("2")
+let btnPanificadora  = document.getElementById("3")
+let btnLaticinios    = document.getElementById("4")
+
+btnTodosProdutos.addEventListener("click", function(){
+    ulProdutos.innerHTML = ""
+    listarProdutos(produtos)
+})
+
