@@ -14,7 +14,7 @@ function listarProdutos(arrayDeProdutos){
     }
 }
 listarProdutos(produtos)
-calcularTotal(produtos)
+//calcularTotal(produtos)
 
 function criarCardProduto(produto){
     let tagLi   = document.createElement("li")
@@ -81,7 +81,7 @@ function busca(valorPesquisa){
     }
 
     if(resultBusca.length > 0){
-        calcularTotal(resultBusca)
+        //calcularTotal(resultBusca)
         return resultBusca
     } 
     document.querySelector(".totalPreco").innerText = `R$ 00.00`
