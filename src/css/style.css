@@ -290,6 +290,16 @@ main {
     width: 70px;
 }
 
+.conteudoCompra{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.conteudoCompra span{
+    color: #868E96;
+}
+
 .imagemCompra img{
     height: 70px;
     width: 70px;
