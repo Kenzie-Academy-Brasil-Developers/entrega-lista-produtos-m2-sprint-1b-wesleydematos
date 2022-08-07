@@ -17,19 +17,29 @@ listarProdutos(produtos)
 //calcularTotal(produtos)
 
 function criarCardProduto(produto){
-    let tagLi   = document.createElement("li")
-    let tagImg  = document.createElement("img")
-    let tagH3   = document.createElement("h3")
-    let tagSpan = document.createElement("span")
-    let tagP    = document.createElement("p")
+    let tagLi       = document.createElement("li")
+    let tagImg      = document.createElement("img")
+    let tagH3       = document.createElement("h3")
+    let tagPSecao     = document.createElement("p")
+    let tagSpanComp = document.createElement("span")
+    let tagDiv      = document.createElement("div")
+    let tagP        = document.createElement("p")
+    let tagButton   = document.createElement("button")
 
-    tagImg.src        = produto.img
-    tagImg.alt        = `Imagem ${produto.nome}`
-    tagH3.innerText   = produto.nome
-    tagSpan.innerText = produto.secao
-    tagP.innerText    = `R$ ${produto.preco}.00`
+    let componentes = produto.componentes.join(", ")
+    tagSpanComp.classList.add("componentes")
+    tagSpanComp.innerHTML = `Componentes: ${componentes}.`
+   
+    tagImg.src              = produto.img
+    tagImg.alt              = `Imagem ${produto.nome}`
+    tagH3.innerText         = produto.nome
+    tagPSecao.innerText       = produto.secao
+    tagDiv.classList.add("preco--comprar")
+    tagButton.innerHTML     = "Comprar"
+    tagP.innerText          = `R$ ${produto.preco}`
 
-    tagLi.append(tagImg, tagH3, tagSpan, tagP)
+    tagDiv.append(tagP, tagButton)
+    tagLi.append(tagImg, tagH3, tagPSecao, tagSpanComp, tagDiv)
 
     return tagLi
 }
