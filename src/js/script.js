@@ -19,7 +19,6 @@ function listarProdutos(arrayDeProdutos, secao){
     }
 }
 listarProdutos(produtos, ulProdutos)
-//calcularTotal(produtos)
 
 function criarCardProduto(produto){
     let tagLi       = document.createElement("li")
@@ -48,18 +47,6 @@ function criarCardProduto(produto){
     tagLi.append(tagImg, tagH3, tagPSecao, tagSpanComp, tagDiv)
 
     return tagLi
-}
-
-function calcularTotal(array){
-    document.querySelector(".totalPreco").innerText = ""
-    let total      = 0
-
-    for(let i = 0; i < array.length; i++){
-        let valor = array[i].preco
-        total += valor
-    }
-
-    document.querySelector(".totalPreco").innerText = `R$ ${total}.00`
 }
 
 let inputBusca = document.querySelector(".containerBuscaPorNome input")
@@ -98,10 +85,8 @@ function busca(valorPesquisa){
     }
 
     if(resultBusca.length > 0){
-        //calcularTotal(resultBusca)
         return resultBusca
     } else{
-        //document.querySelector(".totalPreco").innerText = `R$ 00.00`
         alert("Busca não encontrada!")
     }
 }
@@ -109,9 +94,6 @@ function busca(valorPesquisa){
 let divCarrinho = document.querySelector(".conteudoCarrinho")
 divCarrinho.innerHTML = `<img src="./src/img/sacola.png" alt="Sacola de compras" class="sacola">
 <p class="sacolaVazia">Por enquanto não temos produtos no carrinho.</p>`
-
-let quantidadeProduto = document.getElementById("quantProduto")
-let precoTotal        = document.getElementById("totalProduto")
 
 function criarCardProdutoCarrinho(produto){
     let divCompraCarrinho = document.createElement("div")
@@ -132,7 +114,7 @@ function criarCardProdutoCarrinho(produto){
     divConteudoCompra.classList.add("conteudoCompra")
     h3NomeProduto.innerText = produto.nome
     spanSecao.innerText     = produto.secao
-    pPreco.innerText        = produto.preco
+    pPreco.innerText        = `R$ ${produto.preco}`
     botaoLixeira.id         = produto.index
     botaoLixeira.innerText  = "X"
 
@@ -163,7 +145,7 @@ function interceptandoProduto(event){
             
         })
         adicionarCarrinho(produto)
-        //calcularTotal(carrinhoCompras)
+        calcularTotal(carrinhoCompras)
     }
 }
 
@@ -181,7 +163,6 @@ function adicionarCarrinho(produto){
     }
  
 }
-
 
 function removerProduto(event){
     let btnRemover = event.target
@@ -203,7 +184,23 @@ function removerProduto(event){
             divCarrinho.innerHTML = `<img src="./src/img/sacola.png" alt="Sacola de compras" class="sacola">
             <p class="sacolaVazia">Por enquanto não temos produtos no carrinho.</p>`
         }
-        //calcularTotal(carrinhoCompras)
+        calcularTotal(carrinhoCompras)
     }
 }
 divCarrinho.addEventListener("click", removerProduto)
+
+let quantidadeProduto = document.getElementById("quantProduto")
+let precoTotal        = document.getElementById("totalProduto")
+
+function calcularTotal(array){
+    let quantidade = array.length
+    let total      = 0
+
+    for(let i = 0; i < array.length; i++){
+        let valor = parseInt(array[i].preco)
+        total += valor
+    }
+
+    precoTotal.innerText        = `R$ ${total}.00`
+    quantidadeProduto.innerText = `${quantidade}`
+}
