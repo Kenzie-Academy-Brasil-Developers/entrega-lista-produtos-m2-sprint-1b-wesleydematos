@@ -178,9 +178,6 @@ main {
     color: #212529;
 }
 
-.containerListaProdutos ul li span{
-    display: none;
-} 
 
 .containerListaProdutos ul li button {
     background-color: #12b8860d;
@@ -205,6 +202,7 @@ main {
 .containerCarrinho{
     display: flex;
     flex-direction: column;
+    max-width: 600px;
 }
 
 .tituloCarrinho{
@@ -316,4 +314,38 @@ main {
     margin-right: 7px;
     color: red;
     cursor: pointer;
+}
+
+@media (max-width: 767px){
+    .containerListaProdutos ul li span{
+        display: none;
+    } 
+}
+
+@media (min-width: 768px) {
+    .filtersContainer{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1024px) {
+    .filtersContainer{
+        overflow-x: hidden;
+    }
+
+    .conteudoSite{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .containerListaProdutos ul {
+        flex-wrap: wrap;
+        overflow-x: hidden;
+    }
+
+    .containerCarrinho{
+        min-width: 300px;
+    }
 }
