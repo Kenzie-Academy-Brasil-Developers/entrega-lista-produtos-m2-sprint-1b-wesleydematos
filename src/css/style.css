@@ -83,6 +83,10 @@ main {
     border-radius: 8px;
 }
 
+.preco--comprar button{
+    cursor: pointer;
+}
+
 .priceContainer {
     display: flex;
     justify-content: space-between;
@@ -310,4 +314,6 @@ main {
     height: 12px;
     border: none;
     margin-right: 7px;
+    color: red;
+    cursor: pointer;
 }

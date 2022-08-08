@@ -1,6 +1,6 @@
 let ulProdutos = document.querySelector("ul")
 
-function listarProdutos(arrayDeProdutos){
+function listarProdutos(arrayDeProdutos, secao){
 
     if(arrayDeProdutos == undefined){
         ulProdutos.innerHTML = `<div class="novaBusca">Liste todos os produtos novamente e faça uma nova busca!</div>`
@@ -8,12 +8,17 @@ function listarProdutos(arrayDeProdutos){
         for(let i = 0; i<arrayDeProdutos.length; i++){
             let produto             = arrayDeProdutos[i]
             let cardProduto         = criarCardProduto(produto)
-    
-            ulProdutos.appendChild(cardProduto)
+            let cardProdutoCarrinho = criarCardProdutoCarrinho(produto)
+
+            if(secao == ulProdutos){
+                secao.appendChild(cardProduto)
+            }else{
+                secao.appendChild(cardProdutoCarrinho)
+            }
         }
     }
 }
-listarProdutos(produtos)
+listarProdutos(produtos, ulProdutos)
 //calcularTotal(produtos)
 
 function criarCardProduto(produto){
@@ -36,6 +41,7 @@ function criarCardProduto(produto){
     tagPSecao.innerText       = produto.secao
     tagDiv.classList.add("preco--comprar")
     tagButton.innerHTML     = "Comprar"
+    tagButton.id            = produto.id
     tagP.innerText          = `R$ ${produto.preco}`
 
     tagDiv.append(tagP, tagButton)
@@ -70,7 +76,7 @@ btnBusca.addEventListener("click", function(event){
         if(resultadoBusca == undefined){
             inputBusca.value = ""
         }
-        listarProdutos(resultadoBusca)
+        listarProdutos(resultadoBusca, ulProdutos)
         inputBusca.value = ""
     }
 })
@@ -83,9 +89,10 @@ function busca(valorPesquisa){
         
         let pesquisa    = valorPesquisa.toLowerCase()
         let nomeProduto = produtos[i].nome.toLowerCase()
-        let categoria   = produtos[i].secao.toLowerCase()
+        let secao       = produtos[i].secao.toLowerCase()
+        let categoria   = produtos[i].categoria.toLocaleLowerCase()
         
-        if(nomeProduto.includes(pesquisa) || categoria.includes(pesquisa)){
+        if(nomeProduto.includes(pesquisa) || categoria.includes(pesquisa) || secao.includes(pesquisa)){
             resultBusca.push(produtos[i])
         }
     }
@@ -93,7 +100,110 @@ function busca(valorPesquisa){
     if(resultBusca.length > 0){
         //calcularTotal(resultBusca)
         return resultBusca
-    } 
-    document.querySelector(".totalPreco").innerText = `R$ 00.00`
-    alert("Busca não encontrada!")
+    } else{
+        //document.querySelector(".totalPreco").innerText = `R$ 00.00`
+        alert("Busca não encontrada!")
+    }
 }
+
+let divCarrinho = document.querySelector(".conteudoCarrinho")
+divCarrinho.innerHTML = `<img src="./src/img/sacola.png" alt="Sacola de compras" class="sacola">
+<p class="sacolaVazia">Por enquanto não temos produtos no carrinho.</p>`
+
+let quantidadeProduto = document.getElementById("quantProduto")
+let precoTotal        = document.getElementById("totalProduto")
+
+function criarCardProdutoCarrinho(produto){
+    let divCompraCarrinho = document.createElement("div")
+    let divEsquerda       = document.createElement("div")
+    let divImagemCompra   = document.createElement("div")
+    let imgProduto        = document.createElement("img")
+    let divConteudoCompra = document.createElement("div")
+    let h3NomeProduto     = document.createElement("h3")
+    let spanSecao         = document.createElement("span")
+    let pPreco            = document.createElement("p")
+    let botaoLixeira      = document.createElement("button")
+
+    divCompraCarrinho.classList.add("compraCarrinho")
+    divEsquerda.classList.add("esquerda")
+    divImagemCompra.classList.add("imagemCompra")
+    imgProduto.src = produto.img
+    imgProduto.alt = `Imagem ${produto.nome}`
+    divConteudoCompra.classList.add("conteudoCompra")
+    h3NomeProduto.innerText = produto.nome
+    spanSecao.innerText     = produto.secao
+    pPreco.innerText        = produto.preco
+    botaoLixeira.id         = produto.index
+    botaoLixeira.innerText  = "X"
+
+    divImagemCompra.append(imgProduto)
+    divConteudoCompra.append(h3NomeProduto, spanSecao, pPreco)
+    divEsquerda.append(divImagemCompra, divConteudoCompra)
+    divCompraCarrinho.append(divEsquerda, botaoLixeira)
+
+    return divCompraCarrinho
+}
+
+ulProdutos.addEventListener("click", interceptandoProduto)
+
+let carrinhoCompras = []
+
+function interceptandoProduto(event){
+
+    let btnComprar  = event.target
+    
+    if(btnComprar.tagName == "BUTTON"){
+    
+        let idProduto = btnComprar.id
+        let produto   = produtos.find(function(produto){
+
+            if(produto.id == idProduto){
+                return produto
+            }
+            
+        })
+        adicionarCarrinho(produto)
+        //calcularTotal(carrinhoCompras)
+    }
+}
+
+function adicionarCarrinho(produto){
+    divCarrinho.innerHTML = ""
+
+    if(produto !== undefined){
+        carrinhoCompras.push(produto)
+
+        for(let i = 0; i < carrinhoCompras.length; i++){
+            let indexArr = carrinhoCompras[i]
+            indexArr.index = i
+        }
+        listarProdutos(carrinhoCompras, divCarrinho)
+    }
+ 
+}
+
+
+function removerProduto(event){
+    let btnRemover = event.target
+
+    if(btnRemover.tagName == "BUTTON"){
+        let index = btnRemover.id
+
+        carrinhoCompras.splice(index, 1)
+        carrinhoCompras.innerText = ""
+
+        for(let i = 0; i < carrinhoCompras.length; i++){
+            let produtos = carrinhoCompras[i]
+            produtos.index = i
+        }
+
+        divCarrinho.innerHTML = ""
+        listarProdutos(carrinhoCompras, divCarrinho)
+        if (carrinhoCompras.length <= 0){
+            divCarrinho.innerHTML = `<img src="./src/img/sacola.png" alt="Sacola de compras" class="sacola">
+            <p class="sacolaVazia">Por enquanto não temos produtos no carrinho.</p>`
+        }
+        //calcularTotal(carrinhoCompras)
+    }
+}
+divCarrinho.addEventListener("click", removerProduto)

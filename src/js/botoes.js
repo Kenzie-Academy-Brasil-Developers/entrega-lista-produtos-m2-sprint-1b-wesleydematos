@@ -5,8 +5,8 @@ let btnLaticinios    = document.getElementById("4")
 
 btnTodosProdutos.addEventListener("click", function(){
     ulProdutos.innerHTML = ""
-    listarProdutos(produtos)
-    calcularTotal(produtos)
+    listarProdutos(produtos, ulProdutos)
+    //calcularTotal(produtos)
 })
 
 btnHortifruti.addEventListener("click", function(){
@@ -19,8 +19,8 @@ btnHortifruti.addEventListener("click", function(){
     }
 
     ulProdutos.innerHTML = ""
-    listarProdutos(arrHortifruti)
-    calcularTotal(arrHortifruti)
+    listarProdutos(arrHortifruti, ulProdutos)
+    //calcularTotal(arrHortifruti)
 })
 
 btnPanificadora.addEventListener("click", function(){
@@ -33,20 +33,20 @@ btnPanificadora.addEventListener("click", function(){
     }
 
     ulProdutos.innerHTML = ""
-    listarProdutos(arrPanificadora)
-    calcularTotal(arrPanificadora)
+    listarProdutos(arrPanificadora, ulProdutos)
+    //calcularTotal(arrPanificadora)
 })
 
 btnLaticinios.addEventListener("click", function(){
     let arrLaticinios = []
 
     for(let i = 0; i < produtos.length; i++){
-        if(produtos[i].secao.includes("Laticínio")){
+        if(produtos[i].secao.includes("Laticinio")){
             arrLaticinios.push(produtos[i])
         }
     }
 
     ulProdutos.innerHTML = ""
-    listarProdutos(arrLaticinios)
-    calcularTotal(arrLaticinios)
+    listarProdutos(arrLaticinios, ulProdutos)
+    //calcularTotal(arrLaticinios)
 })
