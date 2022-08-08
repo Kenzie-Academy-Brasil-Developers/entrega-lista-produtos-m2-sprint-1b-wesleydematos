@@ -330,9 +330,6 @@ main {
 }
 
 @media (min-width: 1024px) {
-    .filtersContainer{
-        overflow-x: hidden;
-    }
 
     .conteudoSite{
         display: flex;
@@ -347,5 +344,11 @@ main {
 
     .containerCarrinho{
         min-width: 300px;
+    }
+}
+
+@media (min-width: 1300px){
+    .filtersContainer{
+        overflow-x: hidden;
     }
 }
